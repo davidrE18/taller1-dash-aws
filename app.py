@@ -21,7 +21,10 @@ app.config.suppress_callback_exceptions = True
 
 # Load data from csv
 def load_data():
-    # To do: Completar la función 
+    data = pd.read_csv("datos_energia.csv")
+    data["time"] = pd.to_datetime(data["time"])
+    data = data.set_index("time")
+    return data
     
 
 # Cargar datos
@@ -142,7 +145,7 @@ def generate_control_card():
                         children=[
                             dcc.Dropdown(
                                 id="dropdown-hora-inicial-hora",
-                                options=[{"label": i, "value": i} for i in np.arange(0,25)],
+                                options=[{"label": i, "value": i} for i in np.arange(0,24)],
                                 value=pd.to_datetime(max(data.index)-dt.timedelta(days=7)).hour,
                                 # style=dict(width='50%', display="inline-block")
                             )
